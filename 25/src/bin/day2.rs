@@ -6,14 +6,13 @@ fn main() {
     }
     let filename = args.get(1).unwrap();
     let barcodes = fs::read_to_string(filename).expect("File error");
-    let ranges: Vec<_> = barcodes.split(',').collect();
+    let ranges: Vec<_> = barcodes.trim().split(',').collect();
     let mut count:i64 = 0;
     for rng in ranges.iter() {
         let ends: Vec<_> = rng.split('-').collect();
         if ends[1] != ""{
             let start = ends[0].parse::<i64>().unwrap();
-            println!("{}", ends[1]);
-            let end = ends[1].parse::<i64>().expect("Ends failed");
+            let end = ends[1].parse::<i64>().expect("asdf");
             //let diff = end - start;
             for i in start..end+1{
                 let id = i.to_string();
@@ -22,10 +21,10 @@ fn main() {
                     let last = id.get(id.len()/2..).unwrap();
                     if first == last{
                         count += i;
-                        println!("{}", count);
                     }
                 }
             }
         }
     }
+    println!("Part 1: {count:?}");
 }
