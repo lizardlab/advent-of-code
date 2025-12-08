@@ -11,10 +11,13 @@ fn main() {
     let mut part2:i64 = 0;
     for jolt in joltages.iter() {
         let first_char_space = jolt.get(..jolt.len()-1).unwrap();
-        let first_numbers: Vec<_> = first_char_space.split_terminator("").map(|x| if x != "" x.parse::<i32>() else { continue }).collect();
-        let first_numbers = first_numbers.get(1..first_numbers.len());
-        println!("{first_numbers:?}");
-        let first_max = first_numbers.iter().max();
+        let numbers: Vec<_> = first_char_space.split_terminator("").filter_map(|x| x.parse::<i32>().ok()).collect();
+        let first_numbers = numbers.get(1..numbers.len()).unwrap();
+        let first_max = first_numbers.into_iter().max().unwrap();
+        let cut = numbers.iter().position(|x| x == first_max).unwrap();
+        let second_numbers = numbers.get(cut+1..).unwrap();
+        let second_max = second_numbers.into_iter().max().unwrap();
+        println!("Second Max: {second_max:?}");
     }
     println!("Part 1: {part1:?}");
     println!("Part 2: {part2:?}");
