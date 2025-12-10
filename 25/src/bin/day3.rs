@@ -10,12 +10,11 @@ fn main() {
     let mut part1:i32 = 0;
     let mut part2:i32 = 0;
     for jolt in joltages.iter() {
-        let first_char_space = jolt.get(..jolt.len()-1).unwrap();
-        let numbers: Vec<_> = first_char_space.split_terminator("").filter_map(|x| x.parse::<i32>().ok()).collect();
+        let numbers: Vec<_> = jolt.split_terminator("").filter_map(|x| x.parse::<i32>().ok()).collect();
         let first_numbers = numbers.get(..numbers.len()-1).unwrap();
         let first_max = first_numbers.into_iter().max().unwrap();
         let cut = numbers.iter().position(|x| x == first_max).unwrap();
-        let second_numbers = numbers.get(cut..).unwrap();
+        let second_numbers = numbers.get(cut+1..).unwrap();
         let second_max = second_numbers.into_iter().max().unwrap();
         let max_jolts = first_max * 10 + second_max;
         part1 += max_jolts;
